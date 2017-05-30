@@ -7,9 +7,9 @@ stores = [{
     'items': [{'name':'my item', 'price': 15.99 }]
 }]
 
-@app.route('/')
-def home():
-  return render_template('index.html')
+#@app.route('/')
+#def home():
+#  return render_template('index.html')
 
 #post /store data: {name :}
 @app.route('/store' , methods=['POST'])
