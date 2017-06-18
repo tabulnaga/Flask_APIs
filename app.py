@@ -1,67 +1,35 @@
-from flask import Flask,jsonify,request,render_template
+from flask import Flask
+import requests
+
 
 app = Flask(__name__)
 
-stores = [{
-    'name': 'My Store',
-    'items': [{'name':'my item', 'price': 15.99 }]
-}]
 
-#@app.route('/')
-#def home():
-#  return render_template('index.html')
 
-#post /store data: {name :}
-@app.route('/store' , methods=['POST'])
-def create_store():
-  request_data = request.get_json()
-  new_store = {
-    'name':request_data['name'],
-    'items':[]
-  }
-  stores.append(new_store)
-  return jsonify(new_store)
-  #pass
 
-#get /store/<name> data: {name :}
-@app.route('/store/<string:name>')
-def get_store(name):
-  for store in stores:
-    if store['name'] == name:
-          return jsonify(store)
-  return jsonify ({'message': 'store not found'})
-  #pass
+def xml_pretty(xml_string):
+	import xml.dom.minidom
+	xml =xml.dom.minidom.parseString(xml_string)
+	pretty_xml_ =xml.toprettyxml()
+	print (pretty_xml_)
 
-#get /store
-@app.route('/store')
-def get_stores():
-  return  jsonify({'stores':stores})
-  #pass
+@app.route('/SendSMS/<string:name>')
+def SendSMS(name):
+    username ='ACa920c25520795abaf477e153e59f94ef' #account_SID
+    password ='1257682f22fd7aca372dab1d73f5800f'   #auth_token
+    number_to_text =name 
+    twilio_number ='+14159420675'
+    message_body ='Hi , this is Tarek, from python program!'
+    base_url ='https://api.twilio.com/2010-04-01/Accounts'
+    message_url = base_url + '/'+ username +'/Messages'
 
-#post /store/<name> data: {name :}
-@app.route('/store/<string:name>/item' , methods=['POST'])
-def create_item_in_store(name):
-  request_data = request.get_json()
-  for store in stores:
-    if store['name'] == name:
-        new_item = {
-            'name': request_data['name'],
-            'price': request_data['price']
-        }
-        store['items'].append(new_item)
-        return jsonify(new_item)
-  return jsonify ({'message' :'store not found'})
-  #pass
+    auth =(username,password)
 
-#get /store/<name>/item data: {name :}
-@app.route('/store/<string:name>/item')
-def get_item_in_store(name):
-  for store in stores:
-    if store['name'] == name:
-        return jsonify( {'items':store['items'] } )
-  return jsonify ({'message':'store not found'})
+    post_data ={"From":twilio_number,"To":number_to_text,"Body":message_body}
 
-  #pass
+    r = requests.post(message_url,data=post_data,auth=auth)
+
+    xml_pretty(r.text)
 
 if __name__ == '__main__':
-  app.run(port=5000)
+  app.run(port=5000,debug=True)
