@@ -30,6 +30,7 @@ def SendSMS(name):
     r = requests.post(message_url,data=post_data,auth=auth)
 
     xml_pretty(r.text)
+    return "Message sent to "+name
 
 if __name__ == '__main__':
   app.run(port=5000,debug=True)
