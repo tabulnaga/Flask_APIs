@@ -19,7 +19,7 @@ def SendSMS(name):
     password ='1257682f22fd7aca372dab1d73f5800f'   #auth_token
     number_to_text =name 
     twilio_number ='+14159420675'
-    message_body ='Good Buy, wish you all the bset. \n Tarek Abulnaga!'
+    message_body ='Good Buy, wish you all the bset :-).\n Tarek Abulnaga'
     base_url ='https://api.twilio.com/2010-04-01/Accounts'
     message_url = base_url + '/'+ username +'/Messages'
 
