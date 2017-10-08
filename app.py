@@ -18,8 +18,8 @@ def SendSMS(name):
     username ='ACa920c25520795abaf477e153e59f94ef' #account_SID
     password ='1257682f22fd7aca372dab1d73f5800f'   #auth_token
     number_to_text =name 
-    #twilio_number ='+14159420675'
-    twilio_number ='Attendance'
+    twilio_number ='+14159420675'
+    #twilio_number ='Attendance'
     message_body ='Please make sure your Attendance app is open as you have request from Admin.!'
     base_url ='https://api.twilio.com/2010-04-01/Accounts'
     message_url = base_url + '/'+ username +'/Messages'
