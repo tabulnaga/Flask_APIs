@@ -1,37 +1,39 @@
 from flask import Flask
 import requests
+import json
+import cx_Oracle
+from pandas.io import sql
 
 
 app = Flask(__name__)
 
+conn = cx_Oracle.connect('TAREK/tarek@196.204.234.29:1521/TABS',threaded=True)
+subcur = conn.cursor()
+cur = conn.cursor()
 
 
 
-def xml_pretty(xml_string):
-	import xml.dom.minidom
-	xml =xml.dom.minidom.parseString(xml_string)
-	pretty_xml_ =xml.toprettyxml()
-	print (pretty_xml_)
+def PrepareData ():
+    
+    L_sSelect ="""
+    Select * from EMP_LOG
+    """
+       
+       
+    Subsdatadf = sql.read_sql(L_sSelect,con=conn) 
+        
+        
+    return Subsdatadf    
 
-@app.route('/SendSMS/<string:name>')
-def SendSMS(name):
-    username ='ACa920c25520795abaf477e153e59f94ef' #account_SID
-    password ='1257682f22fd7aca372dab1d73f5800f'   #auth_token
-    number_to_text =name 
-    twilio_number ='+14159420675'
-    #twilio_number ='Attendance'
-    message_body ='Please make sure your Attendance app is open as you have request from Admin.!'
-    base_url ='https://api.twilio.com/2010-04-01/Accounts'
-    message_url = base_url + '/'+ username +'/Messages'
+@app.route('/GetEmp/<string:id>')
+def GetEmp(id):
+    Subsdf=PrepareData()
+    json_dict=Subsdf.reset_index().to_json(orient='records')
+    L_sSubParamJson = json.loads(json_dict)
+    #print (L_sSubParamJson)
+    return L_sSubParamJson
 
-    auth =(username,password)
-
-    post_data ={"From":twilio_number,"To":number_to_text,"Body":message_body}
-
-    r = requests.post(message_url,data=post_data,auth=auth)
-
-    xml_pretty(r.text)
-    return "Message sent to "+name
+    
 
 if __name__ == '__main__':
   app.run(port=5000,debug=True)
