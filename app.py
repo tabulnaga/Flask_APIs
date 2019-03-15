@@ -30,7 +30,7 @@ def GetEmp(id):
     Subsdf=PrepareData()
     json_dict=Subsdf.reset_index().to_json(orient='records')
     L_sSubParamJson = json.loads(json_dict)
-    #print (L_sSubParamJson)
+    print (L_sSubParamJson)
     return L_sSubParamJson
 
     
