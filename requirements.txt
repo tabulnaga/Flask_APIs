@@ -1,6 +1,3 @@
 flask
 requests
 uwsgi
-cx_Oracle
-pandas
-json
