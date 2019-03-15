@@ -1,36 +1,13 @@
 from flask import Flask
 import requests
-import json
-import cx_Oracle
-from pandas.io import sql
-
 
 app = Flask(__name__)
 
-conn = cx_Oracle.connect('TAREK/tarek@196.204.234.29:1521/TABS',threaded=True)
-subcur = conn.cursor()
-cur = conn.cursor()
-
-
-
-def PrepareData ():
-    
-    L_sSelect ="""
-    Select * from EMP_LOG
-    """
-       
-       
-    Subsdatadf = sql.read_sql(L_sSelect,con=conn) 
-        
-        
-    return Subsdatadf    
-
 @app.route('/GetEmp/<string:id>')
 def GetEmp(id):
-    Subsdf=PrepareData()
-    json_dict=Subsdf.reset_index().to_json(orient='records')
-    L_sSubParamJson = json.loads(json_dict)
-    print (L_sSubParamJson)
+    
+	L_sSubParamJson=[{u'index': 0, u'EMP_SALARY': u'3000', u'TRANS_SEQ': 28, u'UPDATE_TS': 1552267745000L, u'DEPT_ID': u'2', u'TRANS_DATE': u'11-03-2019 01:29:05', u'EMP_NAME': u'Tarek Abulnaga', u'TRANS_TYPE': u'UPDATE', u'EMP_ID': u'10'}, {u'index': 1, u'EMP_SALARY': u'5000', u'TRANS_SEQ': 29, u'UPDATE_TS': 1552267900000L, u'DEPT_ID': u'2', u'TRANS_DATE': u'11-03-2019 01:31:40', u'EMP_NAME': u'Mahmoud', u'TRANS_TYPE': u'UPDATE', u'EMP_ID': u'11'}, {u'index': 2, u'EMP_SALARY': u'1000', u'TRANS_SEQ': 30, u'UPDATE_TS': 1552268081000L, u'DEPT_ID': u'2', u'TRANS_DATE': u'11-03-2019 01:34:41', u'EMP_NAME': u'Lina Abulnaga', u'TRANS_TYPE': u'UPDATE', u'EMP_ID': u'13'}, {u'index': 3, u'EMP_SALARY': u'5000', u'TRANS_SEQ': 31, u'UPDATE_TS': 1552268259000L, u'DEPT_ID': u'2', u'TRANS_DATE': u'11-03-2019 01:37:39', u'EMP_NAME': u'Rasha', u'TRANS_TYPE': u'UPDATE', u'EMP_ID': u'20'}, {u'index': 4, u'EMP_SALARY': u'4000', u'TRANS_SEQ': 32, u'UPDATE_TS': 1552268316000L, u'DEPT_ID': u'2', u'TRANS_DATE': u'11-03-2019 01:38:36', u'EMP_NAME': u'Jignesh Patel', u'TRANS_TYPE': u'DELETE', u'EMP_ID': u'2'}, {u'index': 5, u'EMP_SALARY': u'5000', u'TRANS_SEQ': 33, u'UPDATE_TS': 1552268349000L, u'DEPT_ID': u'2', u'TRANS_DATE': u'11-03-2019 01:39:09', u'EMP_NAME': u'Allha', u'TRANS_TYPE': u'INSERT', u'EMP_ID': u'21'}, {u'index': 6, u'EMP_SALARY': u'5000', u'TRANS_SEQ': 34, u'UPDATE_TS': 1552268354000L, u'DEPT_ID': u'2', u'TRANS_DATE': u'11-03-2019 01:39:14', u'EMP_NAME': u'Allha', u'TRANS_TYPE': u'UPDATE', u'EMP_ID': u'22'}, {u'index': 7, u'EMP_SALARY': u'5000', u'TRANS_SEQ': 35, u'UPDATE_TS': 1552268384000L, u'DEPT_ID': u'2', u'TRANS_DATE': u'11-03-2019 01:39:44', u'EMP_NAME': u'Allha', u'TRANS_TYPE': u'INSERT', u'EMP_ID': u'22'}, {u'index': 8, u'EMP_SALARY': u'5000', u'TRANS_SEQ': 36, u'UPDATE_TS': 1552268472000L, u'DEPT_ID': u'2', u'TRANS_DATE': u'11-03-2019 01:41:12', u'EMP_NAME': u'Rasha Assaad', u'TRANS_TYPE': u'UPDATE', u'EMP_ID': u'20'}, {u'index': 9, u'EMP_SALARY': u'5000', u'TRANS_SEQ': 37, u'UPDATE_TS': 1552268506000L, u'DEPT_ID': u'2', u'TRANS_DATE': u'11-03-2019 01:41:46', u'EMP_NAME': u'Allha', u'TRANS_TYPE': u'DELETE', u'EMP_ID': u'21'}, {u'index': 10, u'EMP_SALARY': u'1000', u'TRANS_SEQ': 38, u'UPDATE_TS': 1552268529000L, u'DEPT_ID': u'2', u'TRANS_DATE': u'11-03-2019 01:42:09', u'EMP_NAME': u'Lina Abulnaga', u'TRANS_TYPE': u'INSERT', u'EMP_ID': u'13'}, {u'index': 11, u'EMP_SALARY': u'10000', u'TRANS_SEQ': 20, u'UPDATE_TS': 1552186287000L, u'DEPT_ID': u'2', u'TRANS_DATE': u'10-03-2019 02:51:27', u'EMP_NAME': u'Tarek Abulnaga', u'TRANS_TYPE': u'UPDATE', u'EMP_ID': u'10'}, {u'index': 12, u'EMP_SALARY': u'5000', u'TRANS_SEQ': 21, u'UPDATE_TS': 1552186562000L, u'DEPT_ID': u'2', u'TRANS_DATE': u'10-03-2019 02:56:02', u'EMP_NAME': u'Allha Akber', u'TRANS_TYPE': u'INSERT', u'EMP_ID': u'20'}, {u'index': 13, u'EMP_SALARY': u'5000', u'TRANS_SEQ': 22, u'UPDATE_TS': 1552186597000L, u'DEPT_ID': u'2', u'TRANS_DATE': u'10-03-2019 02:56:37', u'EMP_NAME': u'Jignesh', u'TRANS_TYPE': u'DELETE', u'EMP_ID': u'1'}, {u'index': 14, u'EMP_SALARY': u'5000', u'TRANS_SEQ': 23, u'UPDATE_TS': 1552258602000L, u'DEPT_ID': u'2', u'TRANS_DATE': u'10-03-2019 22:56:42', u'EMP_NAME': u'Tarek Mahmoud', u'TRANS_TYPE': u'DELETE', u'EMP_ID': u'12'}, {u'index': 15, u'EMP_SALARY': u'5000', u'TRANS_SEQ': 24, u'UPDATE_TS': 1552258907000L, u'DEPT_ID': u'2', u'TRANS_DATE': u'10-03-2019 23:01:47', u'EMP_NAME': u'Tarek Abulnaga', u'TRANS_TYPE': u'UPDATE', u'EMP_ID': u'10'}, {u'index': 16, u'EMP_SALARY': u'5000', u'TRANS_SEQ': 25, u'UPDATE_TS': 1552258963000L, u'DEPT_ID': u'2', u'TRANS_DATE': u'10-03-2019 23:02:43', u'EMP_NAME': u'Allha Akber', u'TRANS_TYPE': u'INSERT', u'EMP_ID': u'21'}, {u'index': 17, u'EMP_SALARY': u'5000', u'TRANS_SEQ': 26, u'UPDATE_TS': 1552259186000L, u'DEPT_ID': u'2', u'TRANS_DATE': u'10-03-2019 23:06:26', u'EMP_NAME': u'Allha', u'TRANS_TYPE': u'UPDATE', u'EMP_ID': u'21'}, {u'index': 18, u'EMP_SALARY': u'950.5', u'TRANS_SEQ': 27, u'UPDATE_TS': 1552259255000L, u'DEPT_ID': u'2', u'TRANS_DATE': u'10-03-2019 23:07:35', u'EMP_NAME': u'Lina Abulnaga', u'TRANS_TYPE': u'UPDATE', u'EMP_ID': u'13'}]
+
     return L_sSubParamJson
 
     
